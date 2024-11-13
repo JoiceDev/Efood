@@ -8,9 +8,9 @@ const Footer = () => (
   <FooterContainer>
     <Logo src={logo} alt="logo efood" />
     <SocialMediaContainer>
-      <img src={fb} alt="logo facebook" />
-      <img src={insta} alt="logo instagram" />
-      <img src={tt} alt="logo twitter" />
+      <img src={fb} alt="logo facebook" className="pointer" />
+      <img src={insta} alt="logo instagram" className="pointer" />
+      <img src={tt} alt="logo twitter" className="pointer" />
     </SocialMediaContainer>
     <Text>
       A efood é uma plataforma para divulgação de estabelecimentos, a

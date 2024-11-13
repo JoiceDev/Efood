@@ -23,6 +23,10 @@ export const SocialMediaContainer = styled.div`
   margin-left: 468px;
   margin-right: 640px;
   margin-bottom: 80px;
+
+  .pointer {
+    cursor: pointer;
+  }
 `
 
 export const Text = styled.p`
