@@ -25,4 +25,5 @@ export const ButtonLink = styled(Link)`
   border: 1px;
   display: inline-block;
   width: fit-content; /* Faz com que a tag ocupe apenas o conteúdo */
+  cursor: pointer;
 `
