@@ -129,12 +129,11 @@ export const Modal = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   padding: 16px;
   z-index: 99;
-  display: flex;
   align-items: center;
   justify-content: center;
 
