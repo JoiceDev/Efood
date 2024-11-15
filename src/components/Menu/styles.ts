@@ -2,11 +2,12 @@ import styled from 'styled-components'
 
 import img1 from '../../assets/images/fundoheader2.svg'
 
-export const RestaurantsHeader = styled.header`
+export const MenuHeader = styled.header`
   height: 186px; /* Altura da primeira imagem */
   width: 1366px;
   width: 100%;
   background-image: url(${img1});
+  background-size: auto 206px;
   background-repeat: no-repeat;
   background-position: top; /* A imagem fica no topo do header */
   display: flex;
@@ -21,10 +22,18 @@ export const ImageHeader = styled.img`
   width: 100%; /* A imagem ocupa toda a largura */
   height: 280px; /* Altura da segunda imagem */
   object-fit: cover; /* Garante que a imagem preencha a área sem distorcer */
-  margin-top: -20px;
+  // margin-top: -20px;
   z-index: 0; /* Garante que a imagem fique abaixo do overlay */
 `
-
+export const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 280px;
+  background: rgba(0, 0, 0, 0.5); /* Cor e opacidade do overlay */
+  z-index: 1;
+`
 export const Logo = styled.img`
   width: 125px;
   height: 56px;
@@ -91,6 +100,7 @@ export const CardTitle = styled.h3`
   color: #fff;
   margin: 12px 0 8px 0;
   text-align: center;
+  white-space: nowrap;
 `
 
 export const CardDescription = styled.p`
@@ -124,18 +134,30 @@ export const CardContainer = styled.div`
 `
 
 export const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  z-index: 99;
-  align-items: center;
-  justify-content: center;
+
+  &.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    z-index: 99;
+  }
+
+  .foodImg {
+    margin-left: 16px;
+    margin-right: 8px;
+    width: 280px;
+    height: 280px;
+  }
 
   .overlay {
     position: fixed;
@@ -155,11 +177,6 @@ export const Modal = styled.div`
     display: flex;
     position: relative;
     z-index: 1;
-  }
-
-  img {
-    margin-left: 16px;
-    margin-right: 8px;
   }
 
   .pointer {

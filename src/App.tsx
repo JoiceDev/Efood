@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { GlobalCss, Container } from './styles'
 
-import Restaurants from './components/Restaurants'
+import Menu from './components/Menu'
 import Home from './pages/Home'
-import ItalianFood from './pages/ItalianFood'
+import RestaurantsList from './components/RestaurantsList'
 
 const rotas = createBrowserRouter([
   {
@@ -12,7 +12,11 @@ const rotas = createBrowserRouter([
   },
   {
     path: '/food',
-    element: <ItalianFood />
+    element: <RestaurantsList />
+  },
+  {
+    path: '/food/:id', // Rota dinâmica para um restaurante específico
+    element: <Menu /> // Componente que exibe os detalhes do restaurante
   }
 ])
 

@@ -1,11 +1,11 @@
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import Listing from '../../components/Listing'
+import RestaurantsList from '../../components/RestaurantsList'
 
 const Home = () => (
   <>
     <Header />
-    <Listing />
+    <RestaurantsList />
     <Footer />
   </>
 )
