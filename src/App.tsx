@@ -1,33 +1,37 @@
+import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { GlobalCss, Container } from './styles'
 
 import Menu from './components/Menu'
 import Home from './pages/Home'
-import RestaurantsList from './components/RestaurantsList'
+import store from './store'
+import Restaurants from './pages/Restaurants'
 
 const rotas = createBrowserRouter([
   {
     path: '/',
-    element: <Home />
-  },
-  {
-    path: '/food',
-    element: <RestaurantsList />
+    element: <Home /> // Home page
   },
   {
     path: '/food/:id', // Rota dinâmica para um restaurante específico
-    element: <Menu /> // Componente que exibe os detalhes do restaurante
+    element: <Menu /> // Exibe os detalhes do restaurante
   }
+  // {
+  //   path: '/menu/:dishId',
+  //   element:
+  // }
 ])
 
 function App() {
   return (
-    <>
-      <GlobalCss />
-      <Container>
-        <RouterProvider router={rotas} />
-      </Container>
-    </>
+    <Provider store={store}>
+      <>
+        <GlobalCss />
+        <Container>
+          <RouterProvider router={rotas} />
+        </Container>
+      </>
+    </Provider>
   )
 }
 
