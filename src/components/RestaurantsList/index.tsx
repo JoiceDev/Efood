@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useGetRestaurantsQuery } from '../../services/api' // Importando o hook do Redux API
 import {
   Card,
   Description,
@@ -12,35 +12,14 @@ import {
 
 import Tag from '../Tag'
 import { ButtonLink } from '../Button/styles'
-import { FoodType } from '../../types'
 
 const RestaurantsList = () => {
-  const [foodType, setFoodType] = useState<FoodType[]>([])
+  // Usando o hook useGetRestaurantsQuery do Redux Toolkit
+  const { data: foodType = [], error, isLoading } = useGetRestaurantsQuery()
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
-      .then((res) => res.json())
-      .then((res) => {
-        const foodTypes = res.map((item: any) => ({
-          id: item.id,
-          titulo: item.titulo,
-          destacado: item.destacado,
-          tipo: item.tipo,
-          avaliacao: item.avaliacao,
-          descricao: item.descricao,
-          capa: item.capa,
-          cardapio: item.cardapio.map((dish: any) => ({
-            id: dish.id,
-            nome: dish.nome,
-            descricao: dish.descricao,
-            preco: dish.preco,
-            foto: dish.foto,
-            porcao: dish.porcao
-          }))
-        }))
-        setFoodType(foodTypes)
-      })
-  }, [])
+  // Tratando o estado de carregamento e erro
+  if (isLoading) return <p>Carregando...</p>
+  if (error) return <p>Erro ao carregar restaurantes.</p>
 
   return (
     <CardContainer>
