@@ -17,4 +17,5 @@ export interface Dish {
   preco: number
   foto: string
   porcao: string
+  destacado?: boolean
 }
