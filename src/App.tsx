@@ -5,7 +5,7 @@ import { GlobalCss, Container } from './styles'
 import Menu from './components/Menu'
 import Home from './pages/Home'
 import store from './store'
-import Restaurants from './pages/Restaurants'
+import Cart from './components/Cart'
 
 const rotas = createBrowserRouter([
   {
@@ -16,10 +16,6 @@ const rotas = createBrowserRouter([
     path: '/food/:id', // Rota dinâmica para um restaurante específico
     element: <Menu /> // Exibe os detalhes do restaurante
   }
-  // {
-  //   path: '/menu/:dishId',
-  //   element:
-  // }
 ])
 
 function App() {

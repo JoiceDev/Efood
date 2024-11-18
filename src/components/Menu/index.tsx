@@ -4,6 +4,7 @@ import MenuBanner from '../MenuBanner'
 import DishCard from '../DishCard'
 import { CardContainer, Subtitle, Title } from './styles'
 import { useGetRestaurantsQuery } from '../../services/api'
+import Cart from '../Cart'
 
 const Menu = () => {
   const { id } = useParams<{ id: string }>() // Obtendo o ID da URL
@@ -31,6 +32,7 @@ const Menu = () => {
       <MenuBanner imageUrl={restaurantData.cardapio[0]?.foto || ''} />
       <Title>{restaurantData.titulo}</Title>
       <Subtitle>{restaurantData.tipo}</Subtitle>
+      <Cart />
       <CardContainer>
         {restaurantData.cardapio.map((dish) => (
           <DishCard key={dish.id} dish={dish} />
