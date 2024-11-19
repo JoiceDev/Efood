@@ -2,36 +2,36 @@ import styled from 'styled-components'
 import img1 from '../../assets/images/fundoheader2.svg'
 
 export const MenuHeader = styled.header`
-  height: 186px; /* Altura da primeira imagem */
-  width: 1366px;
+  height: 186px;
   width: 100%;
   background-image: url(${img1});
   background-size: auto 206px;
   background-repeat: no-repeat;
-  background-position: top; /* A imagem fica no topo do header */
+  background-position: top;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
+  color: #e66767;
+  padding: 0 20px;
+  position: relative; /* Garante que o z-index seja aplicado */
+  z-index: 5; /* Maior que o banner */
 `
+
 export const Logo = styled.img`
   width: 125px;
-  height: 56px;
+  height: 57.5px;
+  object-fit: contain;
 `
+
 export const TextHeader = styled.p`
   color: #e66767;
   font-size: 18px;
-  width: 109px;
-  height: 21px;
-  position: absolute;
-  top: 59px;
-  left: 340px;
-  font-weigth: 900;
+  font-weight: 900;
+  white-space: nowrap;
+  margin: 0;
 `
 
 export const TextCart = styled(TextHeader)`
-  left: 939px;
-  white-space: nowrap;
+  margin-right: 0;
+  cursor: pointer;
 `

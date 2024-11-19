@@ -1,4 +1,4 @@
-import { useGetRestaurantsQuery } from '../../services/api' // Importando o hook do Redux API
+import { useGetRestaurantsQuery } from '../../services/api'
 import {
   Card,
   Description,
@@ -7,19 +7,15 @@ import {
   CardContainer,
   Star,
   Avaliacao,
-  InfoCard
+  InfoCard,
+  HalfCard
 } from './styles'
 
 import Tag from '../Tag'
 import { ButtonLink } from '../Button/styles'
 
 const RestaurantsList = () => {
-  // Usando o hook useGetRestaurantsQuery do Redux Toolkit
-  const { data: foodType = [], error, isLoading } = useGetRestaurantsQuery()
-
-  // Tratando o estado de carregamento e erro
-  if (isLoading) return <p>Carregando...</p>
-  if (error) return <p>Erro ao carregar restaurantes.</p>
+  const { data: foodType = [] } = useGetRestaurantsQuery()
 
   return (
     <CardContainer>
@@ -37,16 +33,18 @@ const RestaurantsList = () => {
             {food.destacado && <Tag size="small">Destaque da semana</Tag>}
             <Tag size="small">{food.tipo}</Tag>
           </div>
-          <InfoCard>
-            <Title>{food.titulo}</Title>
-            <Avaliacao>
-              {food.avaliacao} <Star>★</Star>
-            </Avaliacao>
-          </InfoCard>
-          <Description>{food.descricao}</Description>
-          <ButtonLink to={`/food/${food.id}`} title="Clique para saber mais">
-            Saiba mais
-          </ButtonLink>
+          <HalfCard>
+            <InfoCard>
+              <Title>{food.titulo}</Title>
+              <Avaliacao>
+                {food.avaliacao} <Star>★</Star>
+              </Avaliacao>
+            </InfoCard>
+            <Description>{food.descricao}</Description>
+            <ButtonLink to={`/food/${food.id}`} title="Clique para saber mais">
+              Saiba mais
+            </ButtonLink>
+          </HalfCard>
         </Card>
       ))}
     </CardContainer>

@@ -5,7 +5,7 @@ import lixeira from '../../assets/images/lixeira.png'
 export const Overlay = styled.div`
   position: absolute;
   top: 0;
-  left: -170px;
+  left: 0px;
   width: 100%;
   height: 100%;
   background-color: #000;
@@ -25,7 +25,7 @@ export const CartContainer = styled.div`
 export const SideBar = styled.aside`
   background-color: #e66767;
   z-index: 100;
-  width: 540px;
+  width: 360px;
   color: #fff;
   padding: 32px 8px 16px 8px;
 `
@@ -35,7 +35,7 @@ export const Price = styled.p`
   line-height: 16px;
   margin-top: 40px;
   margin-bottom: 16px;
-  // display: flex;
+  display: flex;
 
   span {
     margin-left: 216px;
@@ -46,9 +46,12 @@ export const CartItem = styled.li`
   display: flex;
   background-color: #ffebd9;
   color: #e66767;
-  width: 356px;
+  width: 340px;
   margin: 16px 8px;
   position: relative;
+  margin-right: 8px;
+
+
 
   img {
     height: 80px;
@@ -75,9 +78,8 @@ export const CartItem = styled.li`
     border: none;
     cursor: pointer;
     position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 8px 8px;
+    bottom: 8px; /* Espaço em relação ao limite inferior */
+    right: 8px; /* Espaço em relação ao limite direito */
     }
   }
 `
@@ -85,6 +87,6 @@ export const ButtonCart = styled(ButtonLink)`
   background-color: #ffebd9;
   color: #e66767;
   text-align: center;
-  width: 344px;
+  width: 340px;
   height: 24px;
 `
