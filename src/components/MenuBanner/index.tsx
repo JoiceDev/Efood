@@ -1,3 +1,4 @@
+import { Container } from '../../styles'
 import Cart from '../Cart'
 import { ImageHeader, Overlay, Title, Subtitle } from './styles'
 
@@ -12,8 +13,10 @@ const MenuBanner = ({ imageUrl, titulo, tipo }: MenuBannerProps) => {
     <div style={{ position: 'relative' }}>
       <ImageHeader src={imageUrl} alt={`Imagem do restaurante ${titulo}`} />
       <Overlay />
-      <Title>{titulo}</Title>
-      <Subtitle>{tipo}</Subtitle>
+      <Container>
+        <Title>{titulo}</Title>
+        <Subtitle>{tipo}</Subtitle>
+      </Container>
       {/* <Cart /> */}
     </div>
   )
