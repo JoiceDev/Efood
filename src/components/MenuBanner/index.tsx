@@ -17,7 +17,7 @@ const MenuBanner = ({ imageUrl, titulo, tipo }: MenuBannerProps) => {
         <Title>{titulo}</Title>
         <Subtitle>{tipo}</Subtitle>
       </Container>
-      {/* <Cart /> */}
+      <Cart />
     </div>
   )
 }

@@ -3,10 +3,12 @@ import { Dish } from '../../types'
 
 type CartState = {
   items: Dish[]
+  isOpen: boolean
 }
 
 const initialState: CartState = {
-  items: []
+  items: [],
+  isOpen: false
 }
 
 const cartSlice = createSlice({
@@ -15,11 +17,17 @@ const cartSlice = createSlice({
   reducers: {
     add: (state, action: PayloadAction<Dish>) => {
       state.items.push(action.payload)
+    },
+    open: (state) => {
+      state.isOpen = true
+    },
+    close: (state) => {
+      state.isOpen = false
     }
   }
 })
 
 // cartSlice.actions.add ↓ desestruturação para exportar
-export const { add } = cartSlice.actions
+export const { add, open, close } = cartSlice.actions
 
 export default cartSlice.reducer
