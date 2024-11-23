@@ -16,7 +16,22 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action: PayloadAction<Dish>) => {
-      state.items.push(action.payload)
+      // Verificar se o prato já existe no carrinho
+      const dishExists = state.items.some(
+        (item) => item.id === action.payload.id
+      )
+
+      if (dishExists) {
+        const userConfirmed = window.confirm(
+          'Você já possui esse prato em seu carrinho, tem certeza que deseja adicionar outro?'
+        )
+        if (userConfirmed) {
+          const newDish = { ...action.payload, id: Date.now() } // Gerando novo ID com base no timestamp
+          state.items.push(newDish)
+        }
+      } else {
+        state.items.push(action.payload)
+      }
     },
     remove: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload)
