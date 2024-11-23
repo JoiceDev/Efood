@@ -2,6 +2,8 @@ import { Modal, ModalTitle, ModalDescription, ModalButton } from './styles'
 import close from '../../assets/images/close.svg'
 import pizza2 from '../../assets/images/pizza-modal.svg'
 import { Dish } from '../../types'
+import { useDispatch } from 'react-redux'
+import { add, open } from '../../store/reducers/cart'
 
 // Definindo a interface para as props
 interface DishModalProps {
@@ -11,6 +13,12 @@ interface DishModalProps {
 }
 
 const DishModal: React.FC<DishModalProps> = ({ dish, isOpen, onClose }) => {
+  const dispatch = useDispatch()
+
+  const addToCart = () => {
+    dispatch(add(dish))
+    dispatch(open())
+  }
   if (!isOpen) return null
 
   return (
@@ -33,7 +41,7 @@ const DishModal: React.FC<DishModalProps> = ({ dish, isOpen, onClose }) => {
             {dish.descricao}
             <span>Serve: {dish.porcao}</span>
           </ModalDescription>
-          <ModalButton>
+          <ModalButton onClick={addToCart}>
             Adicionar ao carrinho - R${dish.preco.toFixed(2)}
           </ModalButton>
         </div>

@@ -8,11 +8,10 @@ import {
   CartItem,
   ButtonCart
 } from './styles'
-import pizza from '../../assets/images/pizza.svg'
-import { close } from '../../store/reducers/cart'
+import { close, remove } from '../../store/reducers/cart'
 
 const Cart = () => {
-  const { isOpen } = useSelector((state: RootReducer) => state.cart)
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
 
   const dispatch = useDispatch()
 
@@ -20,42 +19,33 @@ const Cart = () => {
     dispatch(close())
   }
 
+  // Calcular o preço total
+  const totalPrice = items.reduce((total, item) => total + item.preco, 0)
+
+  const removeItem = (id: number) => {
+    dispatch(remove(id))
+  }
+
   return (
     <CartContainer className={isOpen ? 'is-open' : ''}>
       <Overlay onClick={closeCart} />
       <SideBar>
         <ul>
-          <CartItem>
-            <img src={pizza} />
-            <div>
-              <h3>Pizza de calabresa</h3>
-              <span>R$ 60,90</span>
-            </div>
-            <button type="button" />
-          </CartItem>
-          <CartItem>
-            <img src={pizza} />
-            <div>
-              <h3>Pizza</h3>
-              <span>R$ 60,90</span>
-            </div>
-            <button type="button" />
-          </CartItem>
-          <CartItem>
-            <img src={pizza} />
-            <div>
-              <h3>Pizza</h3>
-              <span>R$ 60,90</span>
-            </div>
-            <button type="button" />
-          </CartItem>
+          {items.map((item) => (
+            <CartItem key={item.id}>
+              <img src={item.foto} alt={item.nome} />
+              <div>
+                <h3>{item.nome}</h3>
+                <span>R$ {item.preco.toFixed(2)}</span>
+              </div>
+              <button onClick={() => removeItem(item.id)} type="button" />
+            </CartItem>
+          ))}
         </ul>
         <Price>
-          Valor total <span>R$ 182,00</span>
+          Valor total <span>R$ {totalPrice.toFixed(2)}</span>
         </Price>
-        <ButtonCart to="/delivery" title="Ir para a entrega" type="button">
-          Continuar com a entrega
-        </ButtonCart>
+        <ButtonCart to="/delivery">Continuar com a entrega</ButtonCart>
       </SideBar>
     </CartContainer>
   )

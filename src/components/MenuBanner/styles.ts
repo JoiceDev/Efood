@@ -36,4 +36,5 @@ export const Subtitle = styled.h3`
   color: #fff;
   font-weight: 100;
   font-size: 32px;
+  line- height: 40px;
 `
