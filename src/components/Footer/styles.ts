@@ -3,8 +3,8 @@ import { breakpoints } from '../../styles'
 
 export const FooterContainer = styled.div`
   background-color: #ffebd9;
-  max-width: 1360px;
   height: 298px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

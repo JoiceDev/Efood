@@ -6,7 +6,8 @@ export const MenuHeader = styled.header`
   height: 186px;
   width: 100%;
   background-image: url(${img1});
-  background-size: auto 206px;
+  background-size: auto 1366px;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
   display: flex;
@@ -39,7 +40,7 @@ export const TextHeader = styled.p`
 
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 12px;
-    display: block; /* Torna independente no mobile */
+    display: block;
     position: absolute;
     top: -40px;
     left: -32px;

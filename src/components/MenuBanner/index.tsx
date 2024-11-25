@@ -13,7 +13,7 @@ const MenuBanner = ({ imageUrl, titulo, tipo }: MenuBannerProps) => {
     <div style={{ position: 'relative' }}>
       <ImageHeader src={imageUrl} alt={`Imagem do restaurante ${titulo}`} />
       <Overlay />
-      <Container>
+      <Container style={{ position: 'relative' }}>
         <Title>{titulo}</Title>
         <Subtitle>{tipo}</Subtitle>
       </Container>
