@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { breakpoints } from '../../styles'
 
 export const CardContainer = styled.div`
   display: grid;
@@ -6,6 +7,11 @@ export const CardContainer = styled.div`
   gap: 80px;
   margin-top: 80px;
   margin-bottom: 120px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    grid-template-columns: 1fr;
+    max-width: 80%;
+  }
 `
 
 export const Card = styled.div`
@@ -16,6 +22,17 @@ export const Card = styled.div`
   width: 472px;
   min-height: 398px;
   position: relative;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 90%; /* Deixa o card ocupar 90% da largura disponível */
+    padding: 16px; /* Adiciona espaçamento interno mais compacto *
+    min-height: 300px; /
+  }
 `
 
 export const HalfCard = styled.div`

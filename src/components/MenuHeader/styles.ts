@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import img1 from '../../assets/images/fundoheader2.svg'
+import { breakpoints } from '../../styles'
 
 export const MenuHeader = styled.header`
   height: 186px;
@@ -21,6 +22,12 @@ export const Logo = styled.img`
   width: 125px;
   height: 57.5px;
   object-fit: contain;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    max-width: 25%;
+    height: auto;
+    position: relative;
+  }
 `
 
 export const TextHeader = styled.p`
@@ -29,9 +36,25 @@ export const TextHeader = styled.p`
   font-weight: 900;
   white-space: nowrap;
   margin: 0;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 12px;
+    display: block; /* Torna independente no mobile */
+    position: absolute;
+    top: -40px;
+    left: -32px;
+  }
 `
 
 export const TextCart = styled(TextHeader)`
   margin-right: 0;
   cursor: pointer;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 12px;
+    position: absolute;
+    top: -40px;
+    right: -32px;
+    text-align: right;
+  }
 `

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { breakpoints } from '../../styles'
 
 export const FooterContainer = styled.div`
   background-color: #ffebd9;
@@ -13,9 +14,14 @@ export const FooterContainer = styled.div`
 `
 
 export const Logo = styled.img`
-  max-width: 128px; /* Corrigido de "max-widht" */
+  max-width: 128px;
   height: 56px;
   margin-top: 40px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    max-width: 25%;
+    height: auto;
+  }
 `
 
 export const SocialMediaContainer = styled.div`

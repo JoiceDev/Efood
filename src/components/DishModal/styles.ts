@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { breakpoints } from '../../styles'
 
 export const Modal = styled.div`
   display: none;
@@ -55,6 +56,48 @@ export const Modal = styled.div`
     justify-content: space-between; /* Alinha o título à esquerda e o ícone à direita */
     align-items: center; /* Alinha verticalmente os itens */
     margin-bottom: 8px;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    &.visible {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      left: 186px;
+      background: rgba(0, 0, 0, 0.73);
+      z-index: 99;
+    }
+
+    .container {
+      width: 90%; /* Ocupa toda a largura disponível */
+      max-width: 50%; /* Ajusta o tamanho para caber melhor na tela */
+      flex-direction: column; /* Empilha o conteúdo */
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      display: flex;
+      box-sizing: border-box;
+      min-height: 50%; /* Faz o fundo ocupar toda a altura do modal */
+      position: relative; /* Garante que seja posicionado internamente ao modal */
+    }
+
+    .foodImg {
+      width: 200px; /* Reduz o tamanho da imagem */
+      height: 200px;
+      margin: 0 auto 16px; /* Centraliza e adiciona margem inferior */
+    }
+
+    .title-close {
+      flex-direction: row; /* Coloca o título e o botão de fechar em uma coluna */
+      position: absolute;
+      top: 0;
+      justify-content: space-between;
+    }
+
+    .title-close h3 {
+      font-size: 16px; /* Reduz o tamanho do título */
+    }
   }
 `
 

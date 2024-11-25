@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { breakpoints } from '../../styles'
 
 export const ImageHeader = styled.img`
   width: 100%;
@@ -26,6 +27,11 @@ export const Title = styled.h2`
   font-weight: 900;
   color: #fff;
   z-index: 2;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 24px;
+    left: 24px;
+  }
 `
 
 export const Subtitle = styled.h3`
@@ -37,4 +43,10 @@ export const Subtitle = styled.h3`
   font-weight: 100;
   font-size: 32px;
   line- height: 40px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 16px;
+    left: 24px;
+    top: -224px;
+  }
 `
