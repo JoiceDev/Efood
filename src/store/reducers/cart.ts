@@ -9,6 +9,7 @@ type CartState = {
   isPayment: boolean
   isConfirmed: boolean
   isCart: boolean
+  totalPrice: number
 }
 
 const initialState: CartState = {
@@ -18,7 +19,8 @@ const initialState: CartState = {
   isPayment: false,
   isConfirmed: false,
   isCart: true,
-  dish: []
+  dish: [],
+  totalPrice: 0
 }
 
 const cartSlice = createSlice({
@@ -37,13 +39,26 @@ const cartSlice = createSlice({
         if (userConfirmed) {
           const newDish = { ...action.payload, id: Date.now() }
           state.items.push(newDish)
+          state.totalPrice = state.items.reduce(
+            (total, item) => total + item.preco,
+            0
+          ) // Atualiza o total
         }
       } else {
         state.items.push(action.payload)
+        state.totalPrice = state.items.reduce(
+          (total, item) => total + item.preco,
+          0
+        ) // Atualiza o total
       }
     },
+
     remove: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload)
+      state.totalPrice = state.items.reduce(
+        (total, item) => total + item.preco,
+        0
+      ) // Atualiza o total
     },
     open: (state) => {
       state.isOpen = true
@@ -82,6 +97,12 @@ const cartSlice = createSlice({
       state.isPayment = false
       state.isConfirmed = false
       state.isCart = true
+    },
+    updateTotalPrice: (state) => {
+      state.totalPrice = state.items.reduce(
+        (total, item) => total + item.preco,
+        0
+      )
     }
   }
 })

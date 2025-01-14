@@ -22,17 +22,22 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { usePurchaseMutation } from '../../services/api'
 import { IMaskInput } from 'react-imask'
+import React from 'react'
 
-type Props = {
-  priceTotal: number
-}
-
-const Checkout = ({ priceTotal = 0 }: Props) => {
+const Checkout = () => {
   const [purchase, { isSuccess, data }] = usePurchaseMutation()
-  const { isOpen, isPayment, isConfirmed } = useSelector(
-    (state: RootReducer) => state.cart
+  const { isOpen, isPayment, isConfirmed, totalPrice } = useSelector(
+    (state: RootReducer) => state.cart // Aqui estamos pegando o totalPrice do Redux
   )
   const dispatch = useDispatch()
+
+  // Função de formatação de preço
+  const priceFormat = (price: number) => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(price)
+  }
 
   const form = useFormik({
     initialValues: {
@@ -71,8 +76,9 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
         isPayment ? schema.required('O campo é obrigatório') : schema
       )
     }),
-    onSubmit: (values) => {
-      purchase({
+    onSubmit: async (values) => {
+      // Envia dados de pagamento e entrega para o servidor
+      await purchase({
         delivery: {
           receiver: values.remetente,
           address: {
@@ -97,14 +103,17 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
         products: [
           {
             id: 1,
-            price: 100
+            price: totalPrice // Atualizado para usar o totalPrice do Redux
           }
         ]
       })
+      if (isSuccess) {
+        dispatch(confirmed())
+      }
     }
   })
 
-  const getErroMassage = (campo: string, message?: string) => {
+  const getErroMessage = (campo: string, message?: string) => {
     const estaAlterado = campo in form.touched
     const estaInvalido = campo in form.errors
     if (estaAlterado && estaInvalido) {
@@ -116,12 +125,15 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
   const finish = () => {
     dispatch(closeAndFinish())
   }
+
   const backCart = () => {
-    dispatch(backtoCart())
+    dispatch(backtoCart()) // Verifique a lógica de redux para essa ação
   }
+
   const backAdress = () => {
     dispatch(startCheckout())
   }
+
   const activePayment = () => {
     if (
       form.values.remetente &&
@@ -135,6 +147,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
       alert('Preencha antes os dados obrigatórios!')
     }
   }
+
   const activeConfirmed = () => {
     if (
       form.values.cardName &&
@@ -143,17 +156,22 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
       form.values.anoVencimento &&
       form.values.mesVencimento
     ) {
-      dispatch(confirmed())
+      form.handleSubmit()
     } else {
       alert('Preencha antes os dados obrigatórios!')
     }
   }
 
+  // Garantir que a re-renderização do componente aconteça corretamente quando o preço mudar
+  React.useEffect(() => {
+    console.log('Preço atualizado:', totalPrice) // Debugging para ver se o valor de `totalPrice` está mudando
+  }, [totalPrice])
+
   return (
     <CheckoutContainer className={isOpen ? 'is-open' : ''}>
-      <Overlay onClick={() => dispatch(backtoCart())} />
+      <Overlay onClick={backCart} />
       <SideBar>
-        <form onSubmit={form.handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <DeliverContainer
             className={!isPayment && !isConfirmed ? 'show' : ''}
           >
@@ -169,7 +187,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                 value={form.values.remetente}
               />
               <small>
-                {getErroMassage('remetente', form.errors.remetente)}
+                {getErroMessage('remetente', form.errors.remetente)}
               </small>
             </Field>
             <Field>
@@ -182,7 +200,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                 onBlur={form.handleBlur}
                 value={form.values.endereco}
               />
-              <small>{getErroMassage('endereco', form.errors.endereco)}</small>
+              <small>{getErroMessage('endereco', form.errors.endereco)}</small>
             </Field>
             <Field>
               <label htmlFor="cidade">Cidade</label>
@@ -194,7 +212,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                 onBlur={form.handleBlur}
                 value={form.values.cidade}
               />
-              <small>{getErroMassage('cidade', form.errors.cidade)}</small>
+              <small>{getErroMessage('cidade', form.errors.cidade)}</small>
             </Field>
             <div className="CEPNumber">
               <Field>
@@ -208,7 +226,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                   onBlur={form.handleBlur}
                   value={form.values.cep}
                 />
-                <small>{getErroMassage('cep', form.errors.cep)}</small>
+                <small>{getErroMessage('cep', form.errors.cep)}</small>
               </Field>
               <Field>
                 <label htmlFor="numero">Número</label>
@@ -220,7 +238,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                   onBlur={form.handleBlur}
                   value={form.values.numero}
                 />
-                <small>{getErroMassage('numero', form.errors.numero)}</small>
+                <small>{getErroMessage('numero', form.errors.numero)}</small>
               </Field>
             </div>
             <Field>
@@ -245,7 +263,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
           </DeliverContainer>
 
           <PaymentContainer className={isPayment && !isConfirmed ? 'show' : ''}>
-            <p>Pagamento - Valor a pagar {priceTotal}</p>
+            <p>Pagamento - Valor a pagar {priceFormat(totalPrice)}</p>
             <Field>
               <label htmlFor="cardName">Nome do cartão</label>
               <input
@@ -256,7 +274,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                 onBlur={form.handleBlur}
                 value={form.values.cardName}
               />
-              <small>{getErroMassage('cardName', form.errors.cardName)}</small>
+              <small>{getErroMessage('cardName', form.errors.cardName)}</small>
             </Field>
             <div className="fieldContainer">
               <Field>
@@ -271,7 +289,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                   value={form.values.cardNumber}
                 />
                 <small>
-                  {getErroMassage('cardNumber', form.errors.cardNumber)}
+                  {getErroMessage('cardNumber', form.errors.cardNumber)}
                 </small>
               </Field>
               <Field>
@@ -285,7 +303,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                   onBlur={form.handleBlur}
                   value={form.values.cvv}
                 />
-                <small>{getErroMassage('cvv', form.errors.cvv)}</small>
+                <small>{getErroMessage('cvv', form.errors.cvv)}</small>
               </Field>
             </div>
             <div className="fieldContainer">
@@ -301,7 +319,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                   value={form.values.mesVencimento}
                 />
                 <small>
-                  {getErroMassage('mesVencimento', form.errors.mesVencimento)}
+                  {getErroMessage('mesVencimento', form.errors.mesVencimento)}
                 </small>
               </Field>
               <Field>
@@ -316,7 +334,7 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
                   value={form.values.anoVencimento}
                 />
                 <small>
-                  {getErroMassage('anoVencimento', form.errors.anoVencimento)}
+                  {getErroMessage('anoVencimento', form.errors.anoVencimento)}
                 </small>
               </Field>
             </div>
@@ -331,14 +349,13 @@ const Checkout = ({ priceTotal = 0 }: Props) => {
           </PaymentContainer>
 
           <ConfirmedContainer
-            className={isConfirmed && isSuccess ? 'show' : ''}
+            className={isSuccess && isConfirmed ? 'show' : ''}
           >
             <h2>Pedido realizado - {data?.orderId}</h2>
             <p>
               Estamos felizes em informar que seu pedido já está em processo de
               preparação e, em breve, será entregue no endereço fornecido.
             </p>
-            <br />
             <p>
               Lembre-se da importância de higienizar as mãos após o recebimento
               do pedido.

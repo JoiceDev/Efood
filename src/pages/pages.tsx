@@ -15,6 +15,6 @@ export const rotas = createBrowserRouter([
   },
   {
     path: '/delivery/',
-    element: <Checkout priceTotal={0} />
+    element: <Checkout />
   }
 ])
