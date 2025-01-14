@@ -33,3 +33,21 @@ export const Container = styled.div`
     height: auto;
   }
 `
+export const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.7;
+  z-index: 50;
+`
+
+export const SideBar = styled.aside`
+  background-color: #e66767;
+  z-index: 100;
+  width: 360px;
+  color: #fff;
+  padding: 32px 8px 16px 8px;
+`

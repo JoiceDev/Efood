@@ -3,12 +3,22 @@ import { Dish } from '../../types'
 
 type CartState = {
   items: Dish[]
+  dish: Dish[]
   isOpen: boolean
+  isAddress: boolean
+  isPayment: boolean
+  isConfirmed: boolean
+  isCart: boolean
 }
 
 const initialState: CartState = {
   items: [],
-  isOpen: false
+  isOpen: false,
+  isAddress: false,
+  isPayment: false,
+  isConfirmed: false,
+  isCart: true,
+  dish: []
 }
 
 const cartSlice = createSlice({
@@ -16,7 +26,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action: PayloadAction<Dish>) => {
-      // Verificar se o prato já existe no carrinho
       const dishExists = state.items.some(
         (item) => item.id === action.payload.id
       )
@@ -26,7 +35,7 @@ const cartSlice = createSlice({
           'Você já possui esse prato em seu carrinho, tem certeza que deseja adicionar outro?'
         )
         if (userConfirmed) {
-          const newDish = { ...action.payload, id: Date.now() } // Gerando novo ID com base no timestamp
+          const newDish = { ...action.payload, id: Date.now() }
           state.items.push(newDish)
         }
       } else {
@@ -41,11 +50,52 @@ const cartSlice = createSlice({
     },
     close: (state) => {
       state.isOpen = false
+    },
+    closeAndFinish: (state) => {
+      state.isOpen = false
+      state.isCart = true
+      state.isConfirmed = false
+      state.isAddress = false
+      state.isPayment = false
+      state.items = []
+    },
+    startCheckout: (state) => {
+      state.isCart = false
+      state.isConfirmed = false
+      state.isAddress = true
+      state.isPayment = false
+    },
+    payment: (state) => {
+      state.isConfirmed = false
+      state.isAddress = false
+      state.isPayment = true
+      state.isCart = false
+    },
+    confirmed: (state) => {
+      state.isConfirmed = true
+      state.isAddress = false
+      state.isPayment = false
+      state.isCart = false
+    },
+    backtoCart: (state) => {
+      state.isAddress = false
+      state.isPayment = false
+      state.isConfirmed = false
+      state.isCart = true
     }
   }
 })
 
-// cartSlice.actions.add ↓ desestruturação para exportar
-export const { add, open, close, remove } = cartSlice.actions
+export const {
+  add,
+  remove,
+  open,
+  close,
+  startCheckout,
+  payment,
+  confirmed,
+  backtoCart,
+  closeAndFinish
+} = cartSlice.actions
 
 export default cartSlice.reducer
