@@ -93,10 +93,11 @@ const cartSlice = createSlice({
       state.isCart = false
     },
     backtoCart: (state) => {
-      state.isAddress = false
-      state.isPayment = false
-      state.isConfirmed = false
-      state.isCart = true
+      state.isCart = true // Ativa o carrinho
+      state.isAddress = false // Fecha a tela de endereço
+      state.isPayment = false // Fecha a tela de pagamento
+      state.isConfirmed = false // Fecha a tela de confirmação
+      state.isOpen = false // Fecha o modal de checkout
     },
     updateTotalPrice: (state) => {
       state.totalPrice = state.items.reduce(

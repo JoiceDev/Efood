@@ -127,7 +127,7 @@ const Checkout = () => {
   }
 
   const backCart = () => {
-    dispatch(backtoCart()) // Verifique a lógica de redux para essa ação
+    dispatch(backtoCart())
   }
 
   const backAdress = () => {

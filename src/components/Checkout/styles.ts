@@ -17,16 +17,12 @@ export const CheckoutContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: none;
   justify-content: flex-end;
   z-index: 100;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
 
   &.is-open {
-    opacity: 1;
-    pointer-events: all;
+    display: flex;
   }
 `
 
@@ -36,13 +32,6 @@ export const SideBar = styled.aside`
   width: 360px;
   padding: 32px 8px 16px 8px;
   color: #fff;
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-
-  ${CheckoutContainer}.is-open & {
-    transform: translateX(0);
-  }
 `
 
 export const DeliverContainer = styled.div`
